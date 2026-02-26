@@ -283,6 +283,43 @@
   </div>
 </div>
 
+
+<!-- CONFIGURE SECTION -->
+<div class="how" style="margin-top:0; margin-bottom:0; border-top:none;">
+  <div class="how-inner">
+    <h2>⚙️ Configure after flashing</h2>
+    <p style="color:var(--dim);font-size:14px;line-height:1.7;margin-bottom:20px;">
+      The firmware has a built-in config mode. After flashing, you can update your WiFi credentials,
+      point it at a different CKB node, or change the accent colour — all without reflashing.
+      Just plug in via USB and use the <a href="theme.html" style="color:var(--accent)">Theme Builder</a>.
+    </p>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <p>Plug the device into your PC via USB and open the <a href="theme.html" style="color:var(--accent)">Theme Builder</a></p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <p>Set your WiFi, CKB node URL and accent colour in the form</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <p>Click <strong>Connect &amp; Send</strong> — the browser opens a serial connection and sends your config</p>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <p>Device saves settings to flash and reboots. No reflashing needed — changes persist across power cycles</p>
+      </div>
+    </div>
+    <p style="color:var(--dim);font-size:12px;margin-top:16px;">
+      ⚡ How it works: on every boot the firmware listens on USB serial for 3 seconds.
+      If the browser connects and sends <code style="color:var(--accent2)">CKBCFG</code>, the device enters config mode,
+      receives a small JSON blob, writes it to NVS (non-volatile storage), then reboots with the new settings applied.
+      Default firmware values are used as fallback if no config has been sent yet.
+    </p>
+  </div>
+</div>
+
 <!-- BOARD CARDS -->
 <div class="boards">
 
