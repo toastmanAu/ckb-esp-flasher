@@ -264,6 +264,28 @@
 
       <hr class="divider" />
 
+      <!-- NerdMiner mining config — shown only when nerdminer-cyd detected -->
+      <div id="miningSection" style="display:none">
+        <hr class="divider" />
+        <h2>⛏️ Mining Config</h2>
+        <div class="field">
+          <label>Pool Address</label>
+          <input type="text" id="pool_url" placeholder="e.g. 192.168.68.82 or public-pool.io" />
+        </div>
+        <div class="field">
+          <label>Pool Port</label>
+          <input type="number" id="pool_port" placeholder="3333" value="3333" />
+        </div>
+        <div class="field">
+          <label>CKB Wallet / Worker Address</label>
+          <input type="text" id="wallet_addr" placeholder="ckb1qyq..." />
+        </div>
+        <div class="field">
+          <label>Pool Password</label>
+          <input type="text" id="pool_pass" placeholder="x" value="x" />
+        </div>
+      </div>
+
       <!-- Theme not supported message (hidden by default) -->
       <div id="noThemeMsg" style="display:none;padding:12px 14px;background:#1a0a00;border:1px solid #e05a00;border-radius:8px;color:#e05a00;font-size:13px;margin-bottom:12px;">
         ⚠️ Theme Builder is not supported for this board. Flash and use as-is, or connect a supported board (Guition 4848S040, JC3248W535EN).
@@ -369,17 +391,30 @@
     obj.accent_r = accent.r; obj.accent_g = accent.g; obj.accent_b = accent.b;
     obj.bg_r     = bg.r;     obj.bg_g     = bg.g;     obj.bg_b     = bg.b;
 
+    // NerdMiner mining fields
+    if (typeof detectedBoard !== 'undefined' && detectedBoard === 'nerdminer-cyd') {
+      const pu = document.getElementById('pool_url').value.trim();
+      const pp = parseInt(document.getElementById('pool_port').value) || 3333;
+      const wa = document.getElementById('wallet_addr').value.trim();
+      const ps = document.getElementById('pool_pass').value.trim() || 'x';
+      if (pu) obj.url    = pu;   // NerdMiner uses 'url' for pool address
+      obj.port   = pp;
+      if (wa) obj.wallet = wa;
+      if (ps) obj.pass2  = ps;
+    }
+
     return JSON.stringify(obj);
   }
 
   /* ── Board detection ──────────────────────────────────────── */
-  const THEME_SUPPORTED = ['guition4848', 'jc3248w535en', 'stratum-hmi'];
+  const THEME_SUPPORTED = ['guition4848', 'jc3248w535en', 'stratum-hmi', 'nerdminer-cyd'];
   let detectedBoard = null;
 
   const boardNames = {
     'guition4848':   'Guition ESP32-S3 4848S040',
     'jc3248w535en':  'JCZN JC3248W535EN',
     'stratum-hmi':   'CKB Stratum Proxy HMI',
+    'nerdminer-cyd':  'NerdMiner CKB (CYD)',
   };
 
   function setBoardUI(boardId) {
@@ -399,6 +434,8 @@
       bannerText.textContent = '✅ Detected: ' + name + ' — Theme Builder supported';
       noThemeMsg.style.display = 'none';
       sendBtn.disabled = false;
+      document.getElementById('miningSection').style.display =
+        boardId === 'nerdminer-cyd' ? 'block' : 'none';
     } else if (boardId) {
       banner.style.background = '#1a0a00';
       banner.style.borderColor = '#e05a00';
@@ -406,6 +443,7 @@
       bannerText.textContent = '⚠️ Detected: ' + (boardNames[boardId] || boardId) + ' — Theme Builder not supported for this board';
       noThemeMsg.style.display = 'block';
       sendBtn.disabled = true;
+      document.getElementById('miningSection').style.display = 'none';
     } else {
       banner.style.background = '#1a1a00';
       banner.style.borderColor = '#888';
