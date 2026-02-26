@@ -261,12 +261,13 @@
 <div class="hero">
   <h1>Flash your <span>CKB</span> Node Client</h1>
   <p>Plug in your ESP32, select your board below, and click Flash. No drivers, no IDE, no fuss. Runs entirely in your browser via Web Serial.</p>
+  <p style="color:#00c896;font-size:14px;margin-top:10px;">📱 Works on Android too — Chrome + USB OTG adapter, no PC needed.</p>
 </div>
 
 <!-- Browser compatibility warning -->
 <script>
   if (!navigator.serial) {
-    document.write('<p class="browser-note">⚠️ Web Serial requires <strong>Chrome or Edge</strong> on desktop. <a href="https://caniuse.com/web-serial" target="_blank">Other browsers not supported.</a></p>');
+    document.write('<p class="browser-note">⚠️ Web Serial requires <strong>Chrome or Edge</strong> on desktop, or <strong>Chrome on Android</strong> with a USB OTG adapter. <a href="https://caniuse.com/web-serial" target="_blank">Safari not supported.</a></p>');
   }
 </script>
 
@@ -275,7 +276,7 @@
   <div class="how-inner">
     <h2>How it works</h2>
     <div class="steps">
-      <div class="step"><div class="num">1</div><p>Plug your ESP32 into your computer via USB</p></div>
+      <div class="step"><div class="num">1</div><p>Plug your ESP32 into your computer via USB — or use a <strong>USB OTG adapter on Android</strong></p></div>
       <div class="step"><div class="num">2</div><p>Select your board below and click <strong>Flash</strong></p></div>
       <div class="step"><div class="num">3</div><p>Select the USB port when prompted by the browser</p></div>
       <div class="step"><div class="num">4</div><p>Wait ~30 seconds — done! Device reboots automatically</p></div>
@@ -300,7 +301,7 @@
       </div>
       <div class="step">
         <div class="num">2</div>
-        <p>Set your WiFi, CKB node URL and accent colour in the form</p>
+        <p>Set your WiFi, node URL (local <em>or</em> public — e.g. <code>https://mainnet.ckbapp.dev</code>) and accent colour</p>
       </div>
       <div class="step">
         <div class="num">3</div>

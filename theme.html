@@ -215,6 +215,7 @@
   <div>
     <h1>Theme <span>Builder</span></h1>
     <p class="subtitle">Configure your CKB dashboard without reflashing. Plug in via USB, fill in the form, and send — device reboots with your settings.</p>
+    <p style="color:#00c896;font-size:13px;margin-bottom:16px;">📱 Works on Android — Chrome + USB OTG adapter, no PC needed.</p>
 
     <div class="card">
       <h2>Network</h2>
@@ -230,6 +231,7 @@
       <div class="field">
         <label>CKB Node URL</label>
         <input type="text" id="node_url" placeholder="http://192.168.1.x:8114" />
+        <p style="color:var(--dim);font-size:11px;margin-top:4px;">Public endpoint: <code style="color:var(--accent2)">https://mainnet.ckbapp.dev</code> — no local node needed</p>
       </div>
 
       <hr class="divider" />
@@ -358,7 +360,7 @@
   /* ── WebSerial send ──────────────────────────────────────── */
   async function sendConfig() {
     if (!navigator.serial) {
-      log('❌ Web Serial not supported. Use Chrome or Edge.', 'err');
+      log('❌ Web Serial not supported. Use Chrome/Edge on desktop, or Chrome on Android with USB OTG.', 'err');
       return;
     }
 
