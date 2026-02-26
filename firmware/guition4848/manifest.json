@@ -1,6 +1,6 @@
 {
   "name": "CKB Node Monitor — Guition ESP32-S3 4848S040",
-  "version": "0.0.0",
+  "version": "d5c2b547",
   "home_assistant_domain": "esphome",
   "funding_url": "https://github.com/toastmanAu",
   "new_install_prompt_erase": true,
