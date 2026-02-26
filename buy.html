@@ -23,32 +23,53 @@
       gap: 1rem;
     }
     header .logo { font-size: 1.5rem; }
-    header h1 { font-size: 1.2rem; font-weight: 600; color: #e6edf3; }
+    header h1 { font-size: 1.2rem; font-weight: 600; }
     header p { font-size: 0.85rem; color: #8b949e; margin-top: 0.15rem; }
-    nav a {
-      color: #58a6ff;
-      text-decoration: none;
-      font-size: 0.9rem;
-      margin-left: auto;
-    }
-    nav a:hover { text-decoration: underline; }
+    header nav { margin-left: auto; display: flex; gap: 1rem; }
+    header nav a { color: #58a6ff; text-decoration: none; font-size: 0.9rem; white-space: nowrap; }
+    header nav a:hover { text-decoration: underline; }
 
     .hero {
       text-align: center;
-      padding: 3rem 1rem 2rem;
+      padding: 2.5rem 1rem 1.5rem;
     }
-    .hero h2 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+    .hero h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .hero p { color: #8b949e; max-width: 540px; margin: 0 auto; font-size: 0.95rem; line-height: 1.6; }
+
+    #region-banner {
+      display: none;
+      max-width: 1100px;
+      margin: 0 auto 0.5rem;
+      padding: 0 1.5rem;
     }
-    .hero p {
+    .region-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
       color: #8b949e;
-      max-width: 540px;
-      margin: 0 auto;
-      font-size: 0.95rem;
-      line-height: 1.6;
     }
+    .region-pill strong { color: #e6edf3; }
+    .region-pill a { color: #58a6ff; text-decoration: none; font-size: 0.8rem; }
+    .region-pill a:hover { text-decoration: underline; }
+
+    .note {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-left: 3px solid #58a6ff;
+      border-radius: 6px;
+      padding: 0.9rem 1.2rem;
+      max-width: 1100px;
+      margin: 0 1.5rem 1rem;
+      font-size: 0.85rem;
+      color: #8b949e;
+      line-height: 1.5;
+    }
+    .note strong { color: #e6edf3; }
 
     .grid {
       display: grid;
@@ -71,30 +92,14 @@
     }
     .card:hover { border-color: #58a6ff; }
 
-    .card-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-    }
-    .card-icon {
-      font-size: 2rem;
-      line-height: 1;
-      flex-shrink: 0;
-    }
+    .card-header { display: flex; align-items: flex-start; gap: 0.75rem; }
+    .card-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
     .card-title { font-size: 1.05rem; font-weight: 600; }
     .card-sub { font-size: 0.8rem; color: #8b949e; margin-top: 0.2rem; font-family: monospace; }
 
-    .card-desc {
-      font-size: 0.85rem;
-      color: #8b949e;
-      line-height: 1.5;
-    }
+    .card-desc { font-size: 0.85rem; color: #8b949e; line-height: 1.5; }
 
-    .specs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
+    .specs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .spec-tag {
       background: #21262d;
       border: 1px solid #30363d;
@@ -104,11 +109,7 @@
       color: #8b949e;
     }
 
-    .price-hint {
-      font-size: 0.8rem;
-      color: #3fb950;
-      font-weight: 500;
-    }
+    .price-hint { font-size: 0.8rem; color: #3fb950; font-weight: 500; }
 
     .buy-links {
       display: flex;
@@ -116,6 +117,14 @@
       gap: 0.5rem;
       margin-top: auto;
       padding-top: 0.5rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #484f58;
+      margin: 0.25rem 0 0.1rem;
     }
 
     .buy-btn {
@@ -128,33 +137,18 @@
       font-size: 0.85rem;
       font-weight: 500;
       transition: opacity 0.15s;
-      gap: 0.5rem;
     }
-    .buy-btn:hover { opacity: 0.85; }
-    .buy-btn .store { display: flex; align-items: center; gap: 0.4rem; }
+    .buy-btn:hover { opacity: 0.82; }
     .buy-btn .arrow { font-size: 0.75rem; opacity: 0.7; }
 
-    .btn-ali   { background: #e8192c; color: #fff; }
-    .btn-bang  { background: #d0021b; color: #fff; }
-    .btn-amz   { background: #ff9900; color: #111; }
-    .btn-ebay  { background: #0064d2; color: #fff; }
+    .btn-ali    { background: #e8192c; color: #fff; }
+    .btn-amz    { background: #ff9900; color: #111; }
+    .btn-local  { background: #1f6feb; color: #fff; }
     .btn-search { background: #21262d; border: 1px solid #30363d; color: #e6edf3; }
+    .btn-green  { background: #2ea043; color: #fff; }
 
-    .note {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-left: 3px solid #58a6ff;
-      border-radius: 6px;
-      padding: 0.9rem 1.2rem;
-      max-width: 1100px;
-      margin: 0 auto 1rem;
-      font-size: 0.85rem;
-      color: #8b949e;
-      line-height: 1.5;
-      margin-left: 1.5rem;
-      margin-right: 1.5rem;
-    }
-    .note strong { color: #e6edf3; }
+    .local-stores { display: none; }
+    .local-stores.visible { display: contents; }
 
     footer {
       text-align: center;
@@ -174,22 +168,33 @@
     <h1>CKB ESP Flasher — Where to Buy</h1>
     <p>Hardware boards supported by the CKB firmware ecosystem</p>
   </div>
-  <nav><a href="index.html">← Back to Flasher</a></nav>
+  <nav>
+    <a href="index.html">← Flash</a>
+    <a href="theme.html">Theme Builder</a>
+  </nav>
 </header>
 
 <div class="hero">
   <h2>Get the Hardware</h2>
-  <p>All boards are available from multiple suppliers. AliExpress typically has the lowest prices. Check multiple stores for stock and shipping to your region.</p>
+  <p>Boards ship globally from AliExpress. Local store links shown where available for your region.</p>
+</div>
+
+<div id="region-banner">
+  <div class="region-pill">
+    <span id="region-flag"></span>
+    <span>Showing stores for <strong id="region-name">your region</strong></span>
+    <a href="#" onclick="clearRegion(); return false;">Change</a>
+  </div>
 </div>
 
 <div class="note">
-  <strong>💡 Tip:</strong> Prices vary significantly by seller and shipping option. AliExpress listings often include free (slow) shipping. Search by the exact model number for best results — avoid clones that omit the PSRAM.
+  <strong>💡 Tip:</strong> AliExpress usually has the lowest prices with free (slow) shipping. Local stores cost more but ship faster. Search by exact model number — avoid clones that omit PSRAM.
 </div>
 
 <div class="grid">
 
   <!-- Guition ESP32-S3 4848S040 -->
-  <div class="card">
+  <div class="card" data-board="guition">
     <div class="card-header">
       <div class="card-icon">🖥️</div>
       <div>
@@ -197,9 +202,7 @@
         <div class="card-sub">ESP32-S3-4848S040C / 86-Box</div>
       </div>
     </div>
-    <div class="card-desc">
-      480×480 RGB parallel display in a wall-switch form factor. 8MB PSRAM, 16MB Flash. The flagship CKB dashboard board.
-    </div>
+    <div class="card-desc">480×480 RGB parallel display in a wall-switch form factor. 8MB PSRAM, 16MB Flash. The flagship CKB dashboard board.</div>
     <div class="specs">
       <span class="spec-tag">ESP32-S3</span>
       <span class="spec-tag">480×480 ST7701S</span>
@@ -208,17 +211,21 @@
     </div>
     <div class="price-hint">~$18–25 USD</div>
     <div class="buy-links">
+      <div class="section-label">Global</div>
       <a class="buy-btn btn-ali" href="https://www.aliexpress.com/w/wholesale-ESP32-S3-4848S040.html" target="_blank">
-        <span class="store">🛒 AliExpress</span><span class="arrow">↗</span>
+        <span>🛒 AliExpress</span><span class="arrow">↗</span>
       </a>
+      <div class="local-stores" data-board="guition">
+        <!-- injected by JS -->
+      </div>
       <a class="buy-btn btn-search" href="https://www.google.com/search?q=ESP32-S3-4848S040+buy&tbm=shop" target="_blank">
-        <span class="store">🔍 Google Shopping</span><span class="arrow">↗</span>
+        <span>🔍 Google Shopping</span><span class="arrow">↗</span>
       </a>
     </div>
   </div>
 
   <!-- JC3248W535EN -->
-  <div class="card">
+  <div class="card" data-board="jc3248">
     <div class="card-header">
       <div class="card-icon">📺</div>
       <div>
@@ -226,9 +233,7 @@
         <div class="card-sub">3248W535EN / ESP32-S3 QSPI AMOLED</div>
       </div>
     </div>
-    <div class="card-desc">
-      480×320 QSPI AMOLED display on ESP32-S3. AXS15231B driver chip. Compact round-corner design, great colour depth.
-    </div>
+    <div class="card-desc">480×320 QSPI AMOLED on ESP32-S3. AXS15231B driver. Compact design, great colour depth.</div>
     <div class="specs">
       <span class="spec-tag">ESP32-S3</span>
       <span class="spec-tag">480×320 AMOLED</span>
@@ -237,17 +242,19 @@
     </div>
     <div class="price-hint">~$15–22 USD</div>
     <div class="buy-links">
+      <div class="section-label">Global</div>
       <a class="buy-btn btn-ali" href="https://www.aliexpress.com/w/wholesale-JC3248W535EN.html" target="_blank">
-        <span class="store">🛒 AliExpress</span><span class="arrow">↗</span>
+        <span>🛒 AliExpress</span><span class="arrow">↗</span>
       </a>
+      <div class="local-stores" data-board="jc3248"></div>
       <a class="buy-btn btn-search" href="https://www.google.com/search?q=JC3248W535EN+buy&tbm=shop" target="_blank">
-        <span class="store">🔍 Google Shopping</span><span class="arrow">↗</span>
+        <span>🔍 Google Shopping</span><span class="arrow">↗</span>
       </a>
     </div>
   </div>
 
-  <!-- CYD ESP32-2432S028R -->
-  <div class="card">
+  <!-- CYD -->
+  <div class="card" data-board="cyd">
     <div class="card-header">
       <div class="card-icon">💛</div>
       <div>
@@ -255,9 +262,7 @@
         <div class="card-sub">ESP32-2432S028R</div>
       </div>
     </div>
-    <div class="card-desc">
-      The famous "Cheap Yellow Display" — 320×240 ILI9341 TFT with resistive touch, onboard LED and LDR. Runs NerdMiner CKB.
-    </div>
+    <div class="card-desc">The famous "Cheap Yellow Display" — 320×240 ILI9341 with touch. Runs NerdMiner CKB. Very widely available.</div>
     <div class="specs">
       <span class="spec-tag">ESP32</span>
       <span class="spec-tag">320×240 ILI9341</span>
@@ -266,20 +271,19 @@
     </div>
     <div class="price-hint">~$7–12 USD</div>
     <div class="buy-links">
+      <div class="section-label">Global</div>
       <a class="buy-btn btn-ali" href="https://www.aliexpress.com/w/wholesale-ESP32-2432S028.html" target="_blank">
-        <span class="store">🛒 AliExpress</span><span class="arrow">↗</span>
+        <span>🛒 AliExpress</span><span class="arrow">↗</span>
       </a>
-      <a class="buy-btn btn-amz" href="https://www.amazon.com/s?k=ESP32+Cheap+Yellow+Display+2432S028" target="_blank">
-        <span class="store">📦 Amazon</span><span class="arrow">↗</span>
-      </a>
-      <a class="buy-btn btn-search" href="https://www.google.com/search?q=ESP32-2432S028R+buy&tbm=shop" target="_blank">
-        <span class="store">🔍 Google Shopping</span><span class="arrow">↗</span>
+      <div class="local-stores" data-board="cyd"></div>
+      <a class="buy-btn btn-search" href="https://www.google.com/search?q=ESP32+Cheap+Yellow+Display+2432S028&tbm=shop" target="_blank">
+        <span>🔍 Google Shopping</span><span class="arrow">↗</span>
       </a>
     </div>
   </div>
 
   <!-- T-Impulse -->
-  <div class="card">
+  <div class="card" data-board="timpulse">
     <div class="card-header">
       <div class="card-icon">📡</div>
       <div>
@@ -287,9 +291,7 @@
         <div class="card-sub">T-Impulse / TTGO T-Impulse</div>
       </div>
     </div>
-    <div class="card-desc">
-      ESP32-S3 + SSD1306 OLED + SX1262 LoRa. Compact dev board ideal for the CKB LoRa client. Built-in battery connector.
-    </div>
+    <div class="card-desc">ESP32-S3 + SSD1306 OLED + SX1262 LoRa. CKB LoRa client board. Built-in battery connector.</div>
     <div class="specs">
       <span class="spec-tag">ESP32-S3</span>
       <span class="spec-tag">SSD1306 OLED</span>
@@ -298,11 +300,13 @@
     </div>
     <div class="price-hint">~$20–30 USD</div>
     <div class="buy-links">
+      <div class="section-label">Global</div>
       <a class="buy-btn btn-ali" href="https://www.aliexpress.com/w/wholesale-lilygo-t-impulse.html" target="_blank">
-        <span class="store">🛒 AliExpress</span><span class="arrow">↗</span>
+        <span>🛒 AliExpress</span><span class="arrow">↗</span>
       </a>
+      <div class="local-stores" data-board="timpulse"></div>
       <a class="buy-btn btn-search" href="https://www.google.com/search?q=LILYGO+T-Impulse+LoRa+buy&tbm=shop" target="_blank">
-        <span class="store">🔍 Google Shopping</span><span class="arrow">↗</span>
+        <span>🔍 Google Shopping</span><span class="arrow">↗</span>
       </a>
     </div>
   </div>
@@ -310,8 +314,177 @@
 </div>
 
 <footer>
-  <p>CKB ESP Flasher · Open source firmware for Nervos CKB · <a href="https://github.com/toastmanAu/ckb-esp-flasher" target="_blank">GitHub</a> · Prices approximate, check listings for current availability</p>
+  <p>CKB ESP Flasher · <a href="https://github.com/toastmanAu/ckb-esp-flasher" target="_blank">GitHub</a> · Prices approximate · Store links open in new tab</p>
 </footer>
+
+<script>
+// Regional store data
+// Format: { board: [ { label, url, btn } ] }
+const REGION_STORES = {
+  AU: {
+    flag: '🇦🇺', name: 'Australia',
+    stores: {
+      cyd: [
+        { label: 'Core Electronics', url: 'https://core-electronics.com.au/search/?q=ESP32+2432S028', btn: 'btn-green' },
+        { label: 'Little Bird', url: 'https://www.littlebird.com.au/search?q=ESP32+display', btn: 'btn-local' },
+      ],
+      timpulse: [
+        { label: 'Core Electronics', url: 'https://core-electronics.com.au/search/?q=lilygo+t-impulse', btn: 'btn-green' },
+        { label: 'Little Bird', url: 'https://www.littlebird.com.au/search?q=lilygo+lora', btn: 'btn-local' },
+      ],
+      guition: [
+        { label: 'Core Electronics (search)', url: 'https://core-electronics.com.au/search/?q=ESP32-S3+4848', btn: 'btn-green' },
+      ],
+      jc3248: [
+        { label: 'Core Electronics (search)', url: 'https://core-electronics.com.au/search/?q=JC3248', btn: 'btn-green' },
+      ],
+    }
+  },
+  US: {
+    flag: '🇺🇸', name: 'United States',
+    stores: {
+      cyd: [
+        { label: 'Amazon US', url: 'https://www.amazon.com/s?k=ESP32+Cheap+Yellow+Display+2432S028', btn: 'btn-amz' },
+        { label: 'Adafruit (search)', url: 'https://www.adafruit.com/search?q=ESP32+display', btn: 'btn-local' },
+      ],
+      timpulse: [
+        { label: 'Amazon US', url: 'https://www.amazon.com/s?k=LILYGO+T-Impulse+LoRa', btn: 'btn-amz' },
+        { label: 'Adafruit (search)', url: 'https://www.adafruit.com/search?q=lilygo+lora', btn: 'btn-local' },
+        { label: 'Mouser', url: 'https://www.mouser.com/c/?q=lilygo+lora', btn: 'btn-local' },
+      ],
+      guition: [
+        { label: 'Amazon US', url: 'https://www.amazon.com/s?k=ESP32-S3+4848S040', btn: 'btn-amz' },
+      ],
+      jc3248: [
+        { label: 'Amazon US', url: 'https://www.amazon.com/s?k=JC3248W535EN', btn: 'btn-amz' },
+      ],
+    }
+  },
+  GB: {
+    flag: '🇬🇧', name: 'United Kingdom',
+    stores: {
+      cyd: [
+        { label: 'Amazon UK', url: 'https://www.amazon.co.uk/s?k=ESP32+Cheap+Yellow+Display', btn: 'btn-amz' },
+        { label: 'Pimoroni (search)', url: 'https://shop.pimoroni.com/search?q=ESP32+display', btn: 'btn-local' },
+        { label: 'The Pi Hut', url: 'https://thepihut.com/search?q=ESP32+display', btn: 'btn-green' },
+      ],
+      timpulse: [
+        { label: 'Amazon UK', url: 'https://www.amazon.co.uk/s?k=LILYGO+T-Impulse', btn: 'btn-amz' },
+        { label: 'Pimoroni (search)', url: 'https://shop.pimoroni.com/search?q=lilygo', btn: 'btn-local' },
+      ],
+      guition: [
+        { label: 'Amazon UK', url: 'https://www.amazon.co.uk/s?k=ESP32-S3+4848S040', btn: 'btn-amz' },
+      ],
+      jc3248: [
+        { label: 'Amazon UK', url: 'https://www.amazon.co.uk/s?k=JC3248W535EN', btn: 'btn-amz' },
+      ],
+    }
+  },
+  DE: {
+    flag: '🇩🇪', name: 'Germany / EU',
+    stores: {
+      cyd: [
+        { label: 'Amazon DE', url: 'https://www.amazon.de/s?k=ESP32+Cheap+Yellow+Display', btn: 'btn-amz' },
+        { label: 'Berrybase', url: 'https://www.berrybase.de/search?sSearch=ESP32+display', btn: 'btn-local' },
+        { label: 'Botland', url: 'https://botland.store/search?s=ESP32+display', btn: 'btn-green' },
+      ],
+      timpulse: [
+        { label: 'Amazon DE', url: 'https://www.amazon.de/s?k=LILYGO+T-Impulse', btn: 'btn-amz' },
+        { label: 'Berrybase', url: 'https://www.berrybase.de/search?sSearch=lilygo', btn: 'btn-local' },
+      ],
+      guition: [
+        { label: 'Amazon DE', url: 'https://www.amazon.de/s?k=ESP32-S3+4848S040', btn: 'btn-amz' },
+      ],
+      jc3248: [
+        { label: 'Amazon DE', url: 'https://www.amazon.de/s?k=JC3248W535EN', btn: 'btn-amz' },
+      ],
+    }
+  },
+  CA: {
+    flag: '🇨🇦', name: 'Canada',
+    stores: {
+      cyd: [
+        { label: 'Amazon CA', url: 'https://www.amazon.ca/s?k=ESP32+Cheap+Yellow+Display', btn: 'btn-amz' },
+        { label: 'RobotShop', url: 'https://www.robotshop.com/en/catalogsearch/result/?q=ESP32+display', btn: 'btn-local' },
+      ],
+      timpulse: [
+        { label: 'Amazon CA', url: 'https://www.amazon.ca/s?k=LILYGO+T-Impulse', btn: 'btn-amz' },
+      ],
+      guition: [
+        { label: 'Amazon CA', url: 'https://www.amazon.ca/s?k=ESP32-S3+4848S040', btn: 'btn-amz' },
+      ],
+      jc3248: [
+        { label: 'Amazon CA', url: 'https://www.amazon.ca/s?k=JC3248W535EN', btn: 'btn-amz' },
+      ],
+    }
+  },
+};
+
+// EU country codes that map to DE stores
+const EU_COUNTRIES = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE'];
+
+let detectedRegion = null;
+
+function applyRegion(countryCode) {
+  const regionKey = EU_COUNTRIES.includes(countryCode) ? 'DE' : countryCode;
+  const region = REGION_STORES[regionKey];
+  if (!region) return; // no local data for this country
+
+  detectedRegion = regionKey;
+
+  // Show banner
+  document.getElementById('region-flag').textContent = region.flag;
+  document.getElementById('region-name').textContent = region.name;
+  document.getElementById('region-banner').style.display = 'block';
+
+  // Inject local store buttons into each card
+  const boards = ['guition','jc3248','cyd','timpulse'];
+  boards.forEach(board => {
+    const container = document.querySelector(`.local-stores[data-board="${board}"]`);
+    if (!container) return;
+    const storeList = region.stores[board];
+    if (!storeList || storeList.length === 0) return;
+
+    container.classList.add('visible');
+    let html = `<div class="section-label">${region.flag} Local</div>`;
+    storeList.forEach(s => {
+      html += `<a class="buy-btn ${s.btn}" href="${s.url}" target="_blank">
+        <span>${s.label}</span><span class="arrow">↗</span>
+      </a>`;
+    });
+    container.innerHTML = html;
+  });
+}
+
+function clearRegion() {
+  detectedRegion = null;
+  document.getElementById('region-banner').style.display = 'none';
+  document.querySelectorAll('.local-stores').forEach(el => {
+    el.classList.remove('visible');
+    el.innerHTML = '';
+  });
+  localStorage.removeItem('ckb_region');
+}
+
+async function detectRegion() {
+  // Check saved preference first
+  const saved = localStorage.getItem('ckb_region');
+  if (saved) { applyRegion(saved); return; }
+
+  try {
+    const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4000) });
+    const data = await res.json();
+    if (data.country_code) {
+      localStorage.setItem('ckb_region', data.country_code);
+      applyRegion(data.country_code);
+    }
+  } catch (e) {
+    // Silent fail — just show global links
+  }
+}
+
+detectRegion();
+</script>
 
 </body>
 </html>
