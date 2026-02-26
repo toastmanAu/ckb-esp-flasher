@@ -215,7 +215,16 @@
   <div>
     <h1>Theme <span>Builder</span></h1>
     <p class="subtitle">Configure your CKB dashboard without reflashing. Plug in via USB, fill in the form, and send — device reboots with your settings.</p>
-    <p style="color:#00c896;font-size:13px;margin-bottom:16px;">📱 Works on Android — Chrome + USB OTG adapter, no PC needed.</p>
+    <p style="color:#00c896;font-size:13px;margin-bottom:8px;">📱 Works on Android — Chrome + USB OTG adapter, no PC needed.</p>
+
+    <!-- Board detection banner -->
+    <div id="boardBanner" style="display:none;margin-bottom:16px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--border);">
+      <span id="boardBannerText"></span>
+    </div>
+    <button class="btn" id="detectBtn" onclick="detectBoard()"
+      style="margin-bottom:16px;background:var(--panel);border:1px solid var(--border);color:var(--text);padding:8px 18px;border-radius:8px;cursor:pointer;font-size:13px;">
+      🔌 Detect Board
+    </button>
 
     <div class="card">
       <h2>Network</h2>
@@ -254,6 +263,11 @@
 
       <hr class="divider" />
 
+      <!-- Theme not supported message (hidden by default) -->
+      <div id="noThemeMsg" style="display:none;padding:12px 14px;background:#1a0a00;border:1px solid #e05a00;border-radius:8px;color:#e05a00;font-size:13px;margin-bottom:12px;">
+        ⚠️ Theme Builder is not supported for this board. Flash and use as-is, or connect a supported board (Guition 4848S040, JC3248W535EN).
+      </div>
+
       <button class="btn btn-primary" id="sendBtn" onclick="sendConfig()">
         Connect &amp; Send Config
       </button>
@@ -264,7 +278,7 @@
     <div class="how-note">
       <strong>How it works:</strong> On every boot the firmware listens on USB serial for <strong>3 seconds</strong>.
       When you click Connect &amp; Send, the browser opens a serial connection and sends <code>CKBCFG</code>.
-      The device responds <code>READY</code>, receives your settings as JSON, writes them to flash, and reboots.
+      The device responds <code>READY:board_id</code> (auto-detected), receives your settings as JSON, writes them to flash, and reboots.
       Only fields you fill in are updated — blank fields keep their existing values.
     </div>
   </div>
@@ -357,6 +371,112 @@
     return JSON.stringify(obj);
   }
 
+  /* ── Board detection ──────────────────────────────────────── */
+  const THEME_SUPPORTED = ['guition4848', 'jc3248w535en', 'stratum-hmi'];
+  let detectedBoard = null;
+
+  const boardNames = {
+    'guition4848':   'Guition ESP32-S3 4848S040',
+    'jc3248w535en':  'JCZN JC3248W535EN',
+    'stratum-hmi':   'CKB Stratum Proxy HMI',
+  };
+
+  function setBoardUI(boardId) {
+    detectedBoard = boardId;
+    const banner = document.getElementById('boardBanner');
+    const bannerText = document.getElementById('boardBannerText');
+    const noThemeMsg = document.getElementById('noThemeMsg');
+    const sendBtn = document.getElementById('sendBtn');
+
+    banner.style.display = 'block';
+
+    if (boardId && THEME_SUPPORTED.includes(boardId)) {
+      const name = boardNames[boardId] || boardId;
+      banner.style.background = '#001a0f';
+      banner.style.borderColor = '#00c896';
+      banner.style.color = '#00c896';
+      bannerText.textContent = '✅ Detected: ' + name + ' — Theme Builder supported';
+      noThemeMsg.style.display = 'none';
+      sendBtn.disabled = false;
+    } else if (boardId) {
+      banner.style.background = '#1a0a00';
+      banner.style.borderColor = '#e05a00';
+      banner.style.color = '#e05a00';
+      bannerText.textContent = '⚠️ Detected: ' + (boardNames[boardId] || boardId) + ' — Theme Builder not supported for this board';
+      noThemeMsg.style.display = 'block';
+      sendBtn.disabled = true;
+    } else {
+      banner.style.background = '#1a1a00';
+      banner.style.borderColor = '#888';
+      banner.style.color = '#888';
+      bannerText.textContent = '❓ Unknown board — could not identify device';
+      noThemeMsg.style.display = 'none';
+      sendBtn.disabled = false;
+    }
+  }
+
+  async function detectBoard() {
+    if (!navigator.serial) {
+      alert('Web Serial not supported. Use Chrome or Edge.');
+      return;
+    }
+    const btn = document.getElementById('detectBtn');
+    btn.textContent = '⏳ Detecting…';
+    btn.disabled = true;
+    let port;
+    try {
+      port = await navigator.serial.requestPort();
+      await port.open({ baudRate: 115200 });
+
+      const decoder = new TextDecoderStream();
+      port.readable.pipeTo(decoder.writable);
+      const reader = decoder.readable.getReader();
+      const writer = port.writable.getWriter();
+
+      async function readLine(timeoutMs = 5000) {
+        let buf = '';
+        const deadline = Date.now() + timeoutMs;
+        while (Date.now() < deadline) {
+          const { value, done } = await Promise.race([
+            reader.read(),
+            new Promise((_,r) => setTimeout(() => r(new Error('timeout')), 200))
+          ]).catch(() => ({ value: null, done: false }));
+          if (done || value === null) continue;
+          buf += value;
+          const nl = buf.indexOf('\n');
+          if (nl !== -1) return buf.slice(0, nl).trim();
+        }
+        throw new Error('Read timeout');
+      }
+
+      // Send CKBCFG and parse READY:<board_id>
+      await writer.write(new TextEncoder().encode('CKBCFG\n'));
+      const resp = await readLine(6000);
+      writer.releaseLock();
+      reader.cancel();
+
+      if (resp.startsWith('READY')) {
+        const parts = resp.split(':');
+        const boardId = parts.length > 1 ? parts[1].trim() : null;
+        setBoardUI(boardId);
+        // Pre-fill detected port for sendConfig reuse
+        window._detectedPort = null; // port will close; user re-selects on send
+      } else {
+        setBoardUI(null);
+      }
+    } catch(e) {
+      document.getElementById('boardBanner').style.display = 'block';
+      document.getElementById('boardBannerText').textContent = '❌ Detection failed: ' + e.message;
+      document.getElementById('boardBanner').style.color = '#e05a00';
+      document.getElementById('boardBanner').style.borderColor = '#e05a00';
+      document.getElementById('boardBanner').style.background = '#1a0a00';
+    } finally {
+      try { port && await port.close(); } catch(_) {}
+      btn.textContent = '🔌 Detect Board';
+      btn.disabled = false;
+    }
+  }
+
   /* ── WebSerial send ──────────────────────────────────────── */
   async function sendConfig() {
     if (!navigator.serial) {
@@ -407,8 +527,16 @@
 
       log('Waiting for READY…', 'dim');
       const resp = await readLine(5000);
-      if (resp !== 'READY') throw new Error(`Unexpected response: "${resp}". Is firmware loaded and 3s window still open?`);
-      log('Device ready ✓', 'ok');
+      if (!resp.startsWith('READY')) throw new Error(`Unexpected response: "${resp}". Is firmware loaded and 3s window still open?`);
+      // Parse board ID from READY:<board_id>
+      const readyParts = resp.split(':');
+      if (readyParts.length > 1) {
+        setBoardUI(readyParts[1].trim());
+        if (!THEME_SUPPORTED.includes(readyParts[1].trim())) {
+          throw new Error('Theme Builder not supported for board: ' + readyParts[1].trim());
+        }
+      }
+      log('Device ready ✓' + (readyParts[1] ? ' [' + (boardNames[readyParts[1].trim()] || readyParts[1].trim()) + ']' : ''), 'ok');
 
       const payload = buildJson();
       log(`Sending: ${payload}`, 'dim');
