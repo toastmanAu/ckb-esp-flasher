@@ -13,6 +13,7 @@
       --accent2: #00c896;
       --text:    #e8e8e8;
       --dim:     #888;
+      --warn:    #e05a00;
       --radius:  10px;
       --font:    'Segoe UI', system-ui, sans-serif;
     }
@@ -24,6 +25,7 @@
       min-height: 100vh;
     }
 
+    /* ── HEADER ── */
     header {
       background: var(--panel);
       border-bottom: 1px solid var(--border);
@@ -43,157 +45,152 @@
       font-size: 14px;
       transition: background 0.15s, color 0.15s;
     }
-    header nav a:hover, header nav a.active {
-      background: var(--border);
-      color: var(--text);
-    }
+    header nav a:hover, header nav a.active { background: var(--border); color: var(--text); }
     header nav a.active { color: var(--accent); }
 
-    .hero {
-      text-align: center;
-      padding: 40px 24px 24px;
-    }
-    .hero h1 { font-size: 30px; font-weight: 700; margin-bottom: 8px; }
-    .hero h1 span { color: var(--accent); }
-    .hero p { color: var(--dim); font-size: 15px; max-width: 500px; margin: 0 auto; line-height: 1.6; }
-
-    /* ── MAIN LAYOUT ── */
-    .builder {
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 24px;
-      max-width: 1100px;
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 960px;
       margin: 0 auto;
-      padding: 0 24px 60px;
+      padding: 40px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
     }
-    @media (max-width: 760px) {
-      .builder { grid-template-columns: 1fr; }
+    @media (max-width: 700px) {
+      .container { grid-template-columns: 1fr; }
     }
 
-    /* ── CONTROLS PANEL ── */
-    .controls {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .section {
+    h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    h1 span { color: var(--accent); }
+    .subtitle { color: var(--dim); font-size: 14px; line-height: 1.6; margin-bottom: 28px; }
+
+    /* ── FORM ── */
+    .card {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px;
+      padding: 24px;
     }
-    .section h3 {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-    .field { margin-bottom: 12px; }
-    .field:last-child { margin-bottom: 0; }
-    .field label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      color: var(--dim);
-      margin-bottom: 4px;
-    }
-    .field label .val {
-      font-family: monospace;
-      color: var(--text);
-      font-size: 12px;
-    }
-    .field input[type=color] {
+    .card h2 { font-size: 15px; color: var(--accent); margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 13px; color: var(--dim); margin-bottom: 6px; }
+    .field input[type=text],
+    .field input[type=password] {
       width: 100%;
-      height: 36px;
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 6px;
-      background: none;
+      color: var(--text);
+      font-size: 14px;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .field input:focus { border-color: var(--accent); }
+
+    .colour-row { display: flex; align-items: center; gap: 10px; }
+    .colour-row input[type=color] {
+      width: 44px; height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
       cursor: pointer;
       padding: 2px;
     }
-    .field input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
-    .field input[type=color]::-webkit-color-swatch { border: none; border-radius: 4px; }
+    .colour-row input[type=text] { flex: 1; }
 
-    /* Upload zone */
-    .upload-zone {
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 20px 0;
     }
-    .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: #1a1400; }
-    .upload-zone p { color: var(--dim); font-size: 13px; margin-top: 8px; }
-    .upload-zone .icon { font-size: 32px; }
-    #bg-filename { margin-top: 8px; font-size: 12px; color: var(--accent2); }
 
-    /* Buttons */
+    /* ── BUTTON ── */
     .btn {
       display: block;
       width: 100%;
-      padding: 11px;
-      border-radius: 7px;
+      padding: 12px;
       border: none;
+      border-radius: 7px;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
       transition: opacity 0.15s;
     }
-    .btn:hover { opacity: 0.85; }
     .btn-primary { background: var(--accent); color: #000; }
-    .btn-secondary {
-      background: var(--panel);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-primary:disabled { background: var(--border); color: var(--dim); cursor: not-allowed; opacity: 1; }
 
-    /* ── PREVIEW PANE ── */
-    .preview-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .preview-wrap h3 {
+    /* ── STATUS LOG ── */
+    .log {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      font-family: monospace;
       font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--accent);
+      color: var(--accent2);
+      min-height: 80px;
+      max-height: 160px;
+      overflow-y: auto;
+      margin-top: 16px;
+      white-space: pre-wrap;
     }
-    .preview-outer {
+    .log .err { color: var(--warn); }
+    .log .ok  { color: var(--accent2); }
+    .log .dim { color: var(--dim); }
+
+    /* ── PREVIEW ── */
+    .preview-wrap { position: sticky; top: 24px; }
+    .preview-label { font-size: 13px; color: var(--dim); margin-bottom: 10px; }
+
+    .preview {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      font-family: monospace;
+      font-size: 11px;
+    }
+    .preview .p-header {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .preview .p-header .p-title { font-weight: 700; font-size: 13px; color: #000; }
+    .preview .p-dot { width: 12px; height: 12px; border-radius: 50%; background: #27c34c; border: 2px solid #000; }
+    .preview .p-body { padding: 12px 14px; }
+    .preview .p-label { color: #888; font-size: 10px; margin-bottom: 2px; }
+    .preview .p-number { font-size: 22px; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; }
+    .preview .p-row { display: flex; gap: 12px; margin-bottom: 8px; }
+    .preview .p-stat { flex: 1; }
+    .preview .p-bar-wrap { background: #333; border-radius: 4px; height: 8px; margin-top: 4px; overflow: hidden; }
+    .preview .p-bar { height: 100%; border-radius: 4px; width: 67%; }
+
+    /* ── HOW IT WORKS (compact) ── */
+    .how-note {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-    }
-    canvas#preview {
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      image-rendering: pixelated;
-      max-width: 100%;
-      width: 480px;
-      height: 480px;
-    }
-
-    .preview-note {
-      color: var(--dim);
-      font-size: 12px;
-      line-height: 1.6;
-    }
-    .preview-note strong { color: var(--text); }
-
-    footer {
-      text-align: center;
-      padding: 24px;
-      color: var(--dim);
+      padding: 16px 20px;
+      margin-top: 20px;
       font-size: 13px;
-      border-top: 1px solid var(--border);
+      color: var(--dim);
+      line-height: 1.7;
     }
-    footer a { color: var(--accent); text-decoration: none; }
+    .how-note strong { color: var(--text); }
+    .how-note code { color: var(--accent2); background: var(--bg); padding: 1px 5px; border-radius: 3px; }
+
+    /* ── BROWSER WARN ── */
+    .browser-note {
+      text-align: center;
+      color: var(--warn);
+      font-size: 13px;
+      padding: 16px 24px 0;
+    }
   </style>
 </head>
 <body>
@@ -206,408 +203,230 @@
   </nav>
 </header>
 
-<div class="hero">
-  <h1>Theme <span>Builder</span></h1>
-  <p>Customise the colour scheme of your CKB Node Monitor. Download a <code>theme.h</code> file and drop it into your sketch to apply.</p>
-</div>
+<script>
+  if (!navigator.serial) {
+    document.write('<p class="browser-note">⚠️ Web Serial requires <strong>Chrome or Edge</strong> on desktop.</p>');
+  }
+</script>
 
-<div class="builder">
-  <!-- CONTROLS -->
-  <div class="controls">
+<div class="container">
 
-    <!-- Background image -->
-    <div class="section">
-      <h3>Background Image</h3>
-      <div class="upload-zone" id="drop-zone">
-        <div class="icon">🖼️</div>
-        <p>Drop an image here or click to upload</p>
-        <p>JPEG · PNG · WebP (static) · Auto-resized to 480×480</p>
-        <div id="bg-filename"></div>
+  <!-- LEFT: form -->
+  <div>
+    <h1>Theme <span>Builder</span></h1>
+    <p class="subtitle">Configure your CKB dashboard without reflashing. Plug in via USB, fill in the form, and send — device reboots with your settings.</p>
+
+    <div class="card">
+      <h2>Network</h2>
+
+      <div class="field">
+        <label>WiFi SSID</label>
+        <input type="text" id="wifi_ssid" placeholder="Your network name" autocomplete="off" />
       </div>
-      <input type="file" id="bg-input" accept=".jpg,.jpeg,.png,.webp" style="display:none">
+      <div class="field">
+        <label>WiFi Password</label>
+        <input type="password" id="wifi_pass" placeholder="Leave blank to keep existing" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label>CKB Node URL</label>
+        <input type="text" id="node_url" placeholder="http://192.168.1.x:8114" />
+      </div>
+
+      <hr class="divider" />
+      <h2>Colours</h2>
+
+      <div class="field">
+        <label>Accent colour</label>
+        <div class="colour-row">
+          <input type="color" id="accent_picker" value="#ff6800" />
+          <input type="text"  id="accent_hex"    value="#ff6800" maxlength="7" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Background colour</label>
+        <div class="colour-row">
+          <input type="color" id="bg_picker" value="#101020" />
+          <input type="text"  id="bg_hex"    value="#101020" maxlength="7" />
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <button class="btn btn-primary" id="sendBtn" onclick="sendConfig()">
+        Connect &amp; Send Config
+      </button>
+
+      <div class="log" id="log"><span class="dim">Ready. Fill in the fields above then click Connect &amp; Send.</span></div>
     </div>
 
-    <!-- Colours -->
-    <div class="section">
-      <h3>Colours</h3>
-
-      <div class="field">
-        <label>Header background <span class="val" id="val-accent">#F0A500</span></label>
-        <input type="color" id="col-accent" value="#F0A500">
-      </div>
-      <div class="field">
-        <label>Hero number <span class="val" id="val-hero">#F0A500</span></label>
-        <input type="color" id="col-hero" value="#F0A500">
-      </div>
-      <div class="field">
-        <label>Background <span class="val" id="val-bg">#0D1117</span></label>
-        <input type="color" id="col-bg" value="#0D1117">
-      </div>
-      <div class="field">
-        <label>Panel (since/epoch) <span class="val" id="val-panel">#161B22</span></label>
-        <input type="color" id="col-panel" value="#161B22">
-      </div>
-      <div class="field">
-        <label>Text <span class="val" id="val-text">#FFFFFF</span></label>
-        <input type="color" id="col-text" value="#FFFFFF">
-      </div>
-      <div class="field">
-        <label>Dim text <span class="val" id="val-dim">#888888</span></label>
-        <input type="color" id="col-dim" value="#888888">
-      </div>
-      <div class="field">
-        <label>OK indicator <span class="val" id="val-ok">#00C896</span></label>
-        <input type="color" id="col-ok" value="#00C896">
-      </div>
-      <div class="field">
-        <label>Warn indicator <span class="val" id="val-warn">#F0A500</span></label>
-        <input type="color" id="col-warn" value="#F0A500">
-      </div>
-      <div class="field">
-        <label>Error indicator <span class="val" id="val-err">#E05A00</span></label>
-        <input type="color" id="col-err" value="#E05A00">
-      </div>
+    <div class="how-note">
+      <strong>How it works:</strong> On every boot the firmware listens on USB serial for <strong>3 seconds</strong>.
+      When you click Connect &amp; Send, the browser opens a serial connection and sends <code>CKBCFG</code>.
+      The device responds <code>READY</code>, receives your settings as JSON, writes them to flash, and reboots.
+      Only fields you fill in are updated — blank fields keep their existing values.
     </div>
-
-    <!-- Export -->
-    <div class="section">
-      <h3>Export</h3>
-      <button class="btn btn-primary" id="btn-download">⬇ Download theme.h</button>
-      <br>
-      <button class="btn btn-secondary" id="btn-reset" style="margin-top:8px">↺ Reset to defaults</button>
-    </div>
-
-    <!-- Instructions -->
-    <div class="section">
-      <h3>How to apply</h3>
-      <ol style="color:var(--dim);font-size:13px;line-height:1.8;padding-left:18px;">
-        <li>Download <code style="color:var(--accent2)">theme.h</code></li>
-        <li>Copy it into your sketch's <code>src/</code> folder</li>
-        <li>The sketch auto-includes it if present</li>
-        <li>Flash your board via the <a href="index.html" style="color:var(--accent)">Flash page</a></li>
-      </ol>
-    </div>
-
   </div>
 
-  <!-- PREVIEW -->
+  <!-- RIGHT: live preview -->
   <div class="preview-wrap">
-    <h3>Live Preview — 480×480</h3>
-    <div class="preview-outer">
-      <canvas id="preview" width="480" height="480"></canvas>
+    <p class="preview-label">Live preview</p>
+    <div class="preview" id="preview">
+      <div class="p-header" id="prev-header" style="background:#ff6800;">
+        <span class="p-title">CKB NODE</span>
+        <span class="p-dot"></span>
+      </div>
+      <div class="p-body" id="prev-body" style="background:#101020;">
+        <div class="p-label">block height</div>
+        <div class="p-number" id="prev-accent" style="color:#ff6800;">18,709,215</div>
+        <div class="p-row">
+          <div class="p-stat">
+            <div class="p-label">Peers</div>
+            <div style="color:#27c34c;font-size:16px;font-weight:700;">21</div>
+          </div>
+          <div class="p-stat">
+            <div class="p-label">Mempool</div>
+            <div style="color:#e8e8e8;font-size:16px;font-weight:700;">14 TX</div>
+          </div>
+        </div>
+        <div class="p-label" style="margin-top:4px;">Epoch 3142 &nbsp; 67%</div>
+        <div class="p-bar-wrap">
+          <div class="p-bar" id="prev-bar" style="background:#ff6800;"></div>
+        </div>
+      </div>
     </div>
-    <p class="preview-note">
-      <strong>Note:</strong> Preview is approximate. Font rendering on-device uses 7-segment and JMH Typewriter bitmap fonts which differ from this canvas approximation.
-    </p>
   </div>
-</div>
 
-<footer>
-  Built by <a href="https://github.com/toastmanAu" target="_blank">toastmanAu</a> ·
-  <a href="https://github.com/toastmanAu/kernel-workspace" target="_blank">Firmware on GitHub</a> ·
-  <a href="https://www.nervos.org/" target="_blank">Nervos CKB</a>
-</footer>
+</div>
 
 <script>
-// ── State ──────────────────────────────────────────────────────────
-const DEFAULTS = {
-  accent: '#F0A500',
-  hero:   '#F0A500',
-  bg:     '#0D1117',
-  panel:  '#161B22',
-  text:   '#FFFFFF',
-  dim:    '#888888',
-  ok:     '#00C896',
-  warn:   '#F0A500',
-  err:    '#E05A00',
-};
-let state = { ...DEFAULTS };
-let bgImage = null;  // ImageBitmap if uploaded
-
-// ── Colour inputs ──────────────────────────────────────────────────
-const KEYS = ['accent','hero','bg','panel','text','dim','ok','warn','err'];
-KEYS.forEach(k => {
-  const el = document.getElementById('col-' + k);
-  const val = document.getElementById('val-' + k);
-  el.addEventListener('input', () => {
-    state[k] = el.value.toUpperCase();
-    val.textContent = state[k];
-    renderPreview();
-  });
-});
-
-document.getElementById('btn-reset').addEventListener('click', () => {
-  state = { ...DEFAULTS };
-  KEYS.forEach(k => {
-    document.getElementById('col-' + k).value = state[k];
-    document.getElementById('val-' + k).textContent = state[k];
-  });
-  bgImage = null;
-  document.getElementById('bg-filename').textContent = '';
-  renderPreview();
-});
-
-// ── Image upload ───────────────────────────────────────────────────
-const dropZone = document.getElementById('drop-zone');
-const bgInput  = document.getElementById('bg-input');
-
-dropZone.addEventListener('click', () => bgInput.click());
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag'));
-dropZone.addEventListener('drop', e => {
-  e.preventDefault();
-  dropZone.classList.remove('drag');
-  const file = e.dataTransfer.files[0];
-  if (file) loadImage(file);
-});
-bgInput.addEventListener('change', () => {
-  if (bgInput.files[0]) loadImage(bgInput.files[0]);
-});
-
-function loadImage(file) {
-  // Validate type
-  const allowed = ['image/jpeg','image/png','image/webp'];
-  if (!allowed.includes(file.type)) {
-    alert('Please upload a JPEG, PNG, or static WebP image.');
-    return;
-  }
-  document.getElementById('bg-filename').textContent = '✓ ' + file.name;
-  const url = URL.createObjectURL(file);
-  const img = new Image();
-  img.onload = async () => {
-    // Draw to offscreen 480×480 canvas to resize
-    const oc = new OffscreenCanvas(480, 480);
-    const ctx = oc.getContext('2d');
-    // Cover-fit: scale and centre
-    const scale = Math.max(480 / img.width, 480 / img.height);
-    const sw = img.width * scale, sh = img.height * scale;
-    ctx.drawImage(img, (480 - sw) / 2, (480 - sh) / 2, sw, sh);
-    bgImage = await createImageBitmap(oc);
-    URL.revokeObjectURL(url);
-    renderPreview();
-  };
-  img.src = url;
-}
-
-// ── Preview renderer ───────────────────────────────────────────────
-const canvas = document.getElementById('preview');
-const ctx = canvas.getContext('2d');
-
-function hex2rgb565(hex) {
-  const r = parseInt(hex.slice(1,3),16);
-  const g = parseInt(hex.slice(3,5),16);
-  const b = parseInt(hex.slice(5,7),16);
-  return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
-}
-
-function rgb565toHex(c) {
-  const r = ((c >> 11) & 0x1F) << 3;
-  const g = ((c >> 5)  & 0x3F) << 2;
-  const b =  (c & 0x1F) << 3;
-  return '#' + [r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('');
-}
-
-function renderPreview() {
-  const W = 480, H = 480;
-  const s = state;
-
-  // Background
-  if (bgImage) {
-    ctx.drawImage(bgImage, 0, 0);
-    ctx.fillStyle = 'rgba(0,0,0,0.45)';
-    ctx.fillRect(0, 0, W, H);
-  } else {
-    ctx.fillStyle = s.bg;
-    ctx.fillRect(0, 0, W, H);
-  }
-
-  // ── Header ──
-  ctx.fillStyle = s.accent;
-  ctx.fillRect(0, 0, W, 52);
-  ctx.fillStyle = '#000';
-  ctx.font = 'bold 22px serif';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('CKB NODE', 14, 26);
-  // Status dot
-  ctx.fillStyle = '#000';
-  ctx.beginPath(); ctx.arc(W-28, 26, 11, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = s.ok;
-  ctx.beginPath(); ctx.arc(W-28, 26, 8, 0, Math.PI*2); ctx.fill();
-
-  // ── Block height label ──
-  ctx.fillStyle = s.dim;
-  ctx.font = '14px serif';
-  ctx.textBaseline = 'top';
-  const lbl = 'block height';
-  const lw = ctx.measureText(lbl).width;
-  ctx.fillText(lbl, (W - lw) / 2, 58);
-
-  // ── Hero number ──
-  ctx.fillStyle = s.hero;
-  ctx.font = 'bold 68px monospace';
-  ctx.textBaseline = 'top';
-  const num = '18710113';
-  const nw = ctx.measureText(num).width;
-  ctx.fillText(num, (W - nw) / 2, 78);
-
-  // ── Since bar ──
-  ctx.fillStyle = s.panel;
-  ctx.fillRect(0, 156, W, 44);
-  ctx.strokeStyle = s.dim + '44';
-  ctx.lineWidth = 1;
-  ctx.strokeRect(0, 156, W, 44);
-  ctx.fillStyle = s.ok;
-  ctx.font = 'bold 16px monospace';
-  ctx.textBaseline = 'middle';
-  const since = 'Last block:  0s ago';
-  const sw2 = ctx.measureText(since).width;
-  ctx.fillText(since, (W - sw2) / 2, 156 + 22);
-
-  // ── Stats ──
-  ctx.fillStyle = s.text;
-  ctx.font = 'bold 14px serif';
-  ctx.textBaseline = 'top';
-  ctx.fillText('Peers', 20, 208);
-  ctx.fillText('Mempool', W/2+20, 208);
-  ctx.strokeStyle = s.dim + '44';
-  ctx.beginPath(); ctx.moveTo(W/2, 208); ctx.lineTo(W/2, 270); ctx.stroke();
-  ctx.fillStyle = s.ok;
-  ctx.font = 'bold 36px monospace';
-  ctx.fillText('21', 20, 228);
-  ctx.fillStyle = s.text;
-  ctx.fillText('3', W/2+20, 228);
-
-  // ── Epoch ──
-  ctx.fillStyle = s.panel;
-  ctx.fillRect(0, 272, W, 79);
-  ctx.strokeStyle = s.dim + '44';
-  ctx.strokeRect(0, 272, W, 79);
-  ctx.fillStyle = s.dim;
-  ctx.font = 'bold 14px serif';
-  ctx.textBaseline = 'top';
-  ctx.fillText('Epoch', 20, 285);
-  ctx.fillStyle = s.text;
-  ctx.font = 'bold 18px monospace';
-  ctx.fillText(' 2565', 72, 283);
-  ctx.fillStyle = s.text;
-  ctx.font = 'bold 18px monospace';
-  const pct = '24%';
-  const pw = ctx.measureText(pct).width;
-  ctx.fillText(pct, W - 20 - pw, 283);
-  // Progress bar
-  const bx=20, by=312, bw=W-40, bh=30;
-  ctx.fillStyle = s.dim + '44';
-  roundRect(ctx, bx, by, bw, bh, 6); ctx.fill();
-  ctx.fillStyle = s.accent;
-  roundRect(ctx, bx, by, Math.floor(bw*0.24), bh, 6); ctx.fill();
-
-  // ── Footer ──
-  ctx.strokeStyle = s.dim + '44';
-  ctx.beginPath(); ctx.moveTo(0, 359); ctx.lineTo(W, 359); ctx.stroke();
-  ctx.font = '13px serif';
-  ctx.textBaseline = 'top';
-  const lines = [
-    ['node:', '192.168.68.87'],
-    ['polls:', '27'],
-    ['ip:', '192.168.68.101'],
-    ['id:', '...GGD2PQGGU91HBWAZ'],
-  ];
-  lines.forEach(([label, val], i) => {
-    const y = 371 + i * 26;
-    ctx.fillStyle = s.dim;
-    ctx.fillText(label, 8, y);
-    const lw2 = ctx.measureText(label).width;
-    ctx.fillStyle = s.text;
-    ctx.font = '13px monospace';
-    ctx.fillText(' ' + val, 8 + lw2, y);
-    ctx.font = '13px serif';
-  });
-}
-
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x+r, y);
-  ctx.lineTo(x+w-r, y);
-  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
-  ctx.lineTo(x+w, y+h-r);
-  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-  ctx.lineTo(x+r, y+h);
-  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
-  ctx.lineTo(x, y+r);
-  ctx.quadraticCurveTo(x, y, x+r, y);
-  ctx.closePath();
-}
-
-// ── Export theme.h ─────────────────────────────────────────────────
-document.getElementById('btn-download').addEventListener('click', () => {
-  const s = state;
-
-  function toRGB565(hex) {
+  /* ── Colour sync ─────────────────────────────────────────── */
+  function hexToRgb(hex) {
     const r = parseInt(hex.slice(1,3),16);
     const g = parseInt(hex.slice(3,5),16);
     const b = parseInt(hex.slice(5,7),16);
-    return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+    return {r,g,b};
   }
 
-  let out = `/**
- * theme.h — CKB Node Monitor custom theme
- * Generated by CKB ESP Flasher Theme Builder
- * https://toastmanau.github.io/ckb-esp-flasher/theme.html
- *
- * Drop this file into src/ alongside main.cpp
- */
-
-#pragma once
-
-/* RGB565 colour values */
-#define COL_ACCENT   0x${toRGB565(s.accent).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.accent} */
-#define COL_HERO     0x${toRGB565(s.hero).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.hero} */
-#define COL_BG       0x${toRGB565(s.bg).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.bg} */
-#define COL_PANEL    0x${toRGB565(s.panel).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.panel} */
-#define COL_TEXT     0x${toRGB565(s.text).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.text} */
-#define COL_DIM      0x${toRGB565(s.dim).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.dim} */
-#define COL_OK       0x${toRGB565(s.ok).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.ok} */
-#define COL_WARN     0x${toRGB565(s.warn).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.warn} */
-#define COL_ERR      0x${toRGB565(s.err).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.err} */
-#define COL_DIVIDER  0x2965  /* fixed subtle divider */
-`;
-
-  // If background image uploaded, encode as RGB565 PROGMEM array
-  if (bgImage) {
-    const oc = new OffscreenCanvas(480, 480);
-    const octx = oc.getContext('2d');
-    octx.drawImage(bgImage, 0, 0);
-    const imageData = octx.getImageData(0, 0, 480, 480);
-    const pixels = imageData.data;
-    let arr = '\n/* Background image — 480×480 RGB565 */\n';
-    arr += 'const uint16_t THEME_BG_IMAGE[480*480] PROGMEM = {\n  ';
-    const vals = [];
-    for (let i = 0; i < pixels.length; i += 4) {
-      const r = pixels[i], g = pixels[i+1], b = pixels[i+2];
-      const c = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
-      vals.push('0x' + c.toString(16).toUpperCase().padStart(4,'0'));
-    }
-    // Chunk into rows of 16
-    for (let i = 0; i < vals.length; i += 16) {
-      arr += vals.slice(i, i+16).join(', ');
-      if (i + 16 < vals.length) arr += ',\n  ';
-    }
-    arr += '\n};\n#define THEME_HAS_BG_IMAGE 1\n';
-    out += arr;
-  } else {
-    out += '\n#define THEME_HAS_BG_IMAGE 0\n';
+  function syncColour(pickerId, hexId, previewFn) {
+    const picker = document.getElementById(pickerId);
+    const hex    = document.getElementById(hexId);
+    picker.addEventListener('input', () => { hex.value = picker.value; previewFn(picker.value); });
+    hex.addEventListener('input', () => {
+      if (/^#[0-9a-fA-F]{6}$/.test(hex.value)) {
+        picker.value = hex.value;
+        previewFn(hex.value);
+      }
+    });
   }
 
-  const blob = new Blob([out], { type: 'text/plain' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'theme.h';
-  a.click();
-  URL.revokeObjectURL(a.href);
-});
+  syncColour('accent_picker','accent_hex', v => {
+    document.getElementById('prev-header').style.background = v;
+    document.getElementById('prev-accent').style.color = v;
+    document.getElementById('prev-bar').style.background = v;
+  });
+  syncColour('bg_picker','bg_hex', v => {
+    document.getElementById('prev-body').style.background = v;
+  });
 
-// Initial render
-renderPreview();
+  /* ── Log helper ──────────────────────────────────────────── */
+  const logEl = document.getElementById('log');
+  function log(msg, cls='') {
+    logEl.innerHTML += `<span class="${cls}">${msg}\n</span>`;
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+  function logClear() { logEl.innerHTML = ''; }
+
+  /* ── Build JSON payload ──────────────────────────────────── */
+  function buildJson() {
+    const obj = {};
+    const ssid     = document.getElementById('wifi_ssid').value.trim();
+    const pass     = document.getElementById('wifi_pass').value;
+    const node_url = document.getElementById('node_url').value.trim();
+    const accent   = hexToRgb(document.getElementById('accent_hex').value);
+    const bg       = hexToRgb(document.getElementById('bg_hex').value);
+
+    if (ssid)     obj.wifi_ssid = ssid;
+    if (pass)     obj.wifi_pass = pass;
+    if (node_url) obj.node_url  = node_url;
+
+    obj.accent_r = accent.r; obj.accent_g = accent.g; obj.accent_b = accent.b;
+    obj.bg_r     = bg.r;     obj.bg_g     = bg.g;     obj.bg_b     = bg.b;
+
+    return JSON.stringify(obj);
+  }
+
+  /* ── WebSerial send ──────────────────────────────────────── */
+  async function sendConfig() {
+    if (!navigator.serial) {
+      log('❌ Web Serial not supported. Use Chrome or Edge.', 'err');
+      return;
+    }
+
+    const btn = document.getElementById('sendBtn');
+    btn.disabled = true;
+    logClear();
+
+    let port, writer, reader;
+    try {
+      log('Requesting serial port…', 'dim');
+      port = await navigator.serial.requestPort();
+      await port.open({ baudRate: 115200 });
+      log('Port opened ✓', 'ok');
+
+      writer = port.writable.getWriter();
+      const decoder = new TextDecoderStream();
+      port.readable.pipeTo(decoder.writable);
+      reader = decoder.readable.getReader();
+
+      /* Helper: read lines with timeout */
+      async function readLine(timeoutMs = 5000) {
+        let buf = '';
+        const deadline = Date.now() + timeoutMs;
+        while (Date.now() < deadline) {
+          const { value, done } = await Promise.race([
+            reader.read(),
+            new Promise((_,r) => setTimeout(() => r(new Error('timeout')), 200))
+          ]).catch(() => ({ value: null, done: false }));
+          if (done || value === null) continue;
+          buf += value;
+          const nl = buf.indexOf('\n');
+          if (nl !== -1) return buf.slice(0, nl).trim();
+        }
+        throw new Error('Read timeout');
+      }
+
+      /* Helper: write string */
+      async function write(str) {
+        await writer.write(new TextEncoder().encode(str));
+      }
+
+      log('Sending handshake…', 'dim');
+      await write('CKBCFG\n');
+
+      log('Waiting for READY…', 'dim');
+      const resp = await readLine(5000);
+      if (resp !== 'READY') throw new Error(`Unexpected response: "${resp}". Is firmware loaded and 3s window still open?`);
+      log('Device ready ✓', 'ok');
+
+      const payload = buildJson();
+      log(`Sending: ${payload}`, 'dim');
+      await write(payload + '\nEND\n');
+
+      log('Waiting for OK…', 'dim');
+      const ok = await readLine(5000);
+      if (ok !== 'OK') throw new Error(`Expected OK, got: "${ok}"`);
+
+      log('✅ Config saved! Device is rebooting…', 'ok');
+
+    } catch(e) {
+      log(`❌ ${e.message}`, 'err');
+    } finally {
+      try { writer && writer.releaseLock(); } catch(_) {}
+      try { reader && reader.cancel(); } catch(_) {}
+      try { port  && await port.close(); } catch(_) {}
+      btn.disabled = false;
+    }
+  }
 </script>
 
 </body>
