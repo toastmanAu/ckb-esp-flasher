@@ -44,7 +44,6 @@ jobs:
           cp firmware-src/projects/ckb-lora-client/esp32s3_guition4848_ckb_client/.pio/build/guition4848/firmware.bin        firmware/guition4848/firmware.bin
           cp firmware-src/projects/ckb-lora-client/esp32s3_guition4848_ckb_client/.pio/build/guition4848/bootloader.bin       firmware/guition4848/bootloader.bin
           cp firmware-src/projects/ckb-lora-client/esp32s3_guition4848_ckb_client/.pio/build/guition4848/partitions.bin       firmware/guition4848/partitions.bin
-          # boot_app0.bin from PlatformIO cache
           find ~/.platformio -name "boot_app0.bin" | head -1 | xargs -I{} cp {} firmware/guition4848/boot_app0.bin
 
       - name: Get version from git
@@ -65,17 +64,70 @@ jobs:
           git diff --staged --quiet || git commit -m "ci: firmware build ${{ steps.ver.outputs.version }}"
           git push
 
+  build-nerdminer-cyd:
+    name: Build NerdMiner CKB (CYD)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout flasher repo
+        uses: actions/checkout@v4
+
+      - name: Checkout NerdMiner CKB repo
+        uses: actions/checkout@v4
+        with:
+          repository: toastmanAu/NerdMiner_CKB
+          ref: dev
+          path: nerdminer-src
+
+      - name: Cache PlatformIO
+        uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-nerdminer-${{ hashFiles('nerdminer-src/platformio.ini') }}
+
+      - name: Install PlatformIO
+        run: pip install platformio
+
+      - name: Build firmware
+        working-directory: nerdminer-src
+        run: pio run -e ESP32-2432S028R
+
+      - name: Copy firmware artifacts
+        run: |
+          mkdir -p firmware/nerdminer-cyd
+          cp nerdminer-src/.pio/build/ESP32-2432S028R/firmware.bin   firmware/nerdminer-cyd/firmware.bin
+          cp nerdminer-src/.pio/build/ESP32-2432S028R/bootloader.bin  firmware/nerdminer-cyd/bootloader.bin
+          cp nerdminer-src/.pio/build/ESP32-2432S028R/partitions.bin  firmware/nerdminer-cyd/partitions.bin
+          find ~/.platformio -name "boot_app0.bin" | head -1 | xargs -I{} cp {} firmware/nerdminer-cyd/boot_app0.bin
+
+      - name: Get version from git
+        id: ver
+        run: |
+          cd nerdminer-src
+          echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Update manifest version
+        run: |
+          sed -i 's/"version": ".*"/"version": "${{ steps.ver.outputs.version }}"/' firmware/nerdminer-cyd/manifest.json
+
+      - name: Commit firmware binaries
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add firmware/
+          git diff --staged --quiet || git commit -m "ci: nerdminer-cyd build ${{ steps.ver.outputs.version }}"
+          git push
+
   deploy-pages:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    needs: build-guition4848
+    needs: [build-guition4848, build-nerdminer-cyd]
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main  # pick up the firmware commit
+          ref: main  # pick up the firmware commits
 
       - uses: actions/configure-pages@v4
 

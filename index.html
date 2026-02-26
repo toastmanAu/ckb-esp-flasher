@@ -345,6 +345,27 @@
     </div>
   </div>
 
+  <!-- NerdMiner CKB — ESP32 CYD -->
+  <div class="board-card">
+    <div class="board-img">
+      <img src="assets/nerdminer-cyd.jpg" alt="NerdMiner CKB — ESP32 CYD"
+           onerror="this.parentElement.textContent='&#x26CF;&#xFE0F; ESP32 CYD'">
+    </div>
+    <div class="board-body">
+      <h2>NerdMiner CKB</h2>
+      <div class="chip-badge">ESP32 &middot; 2432S028R (CYD)</div>
+      <p>Solo mine CKB with Eaglesong PoW on a cheap 320&times;240 touchscreen ESP32. Shows hashrate, shares, uptime and pool stats. Dual-core optimised &mdash; hash loop pinned to Core&nbsp;0.</p>
+      <div class="meta">
+        <span>Display: ILI9341 320&times;240</span>
+        <a href="https://github.com/toastmanAu/NerdMiner_CKB" target="_blank">Source &#x2197;</a>
+      </div>
+      <div class="version">Latest: <span id="ver-nerdminer-cyd">loading...</span></div>
+      <esp-web-install-button manifest="firmware/nerdminer-cyd/manifest.json">
+        <span slot="unsupported">Use Chrome or Edge to flash</span>
+      </esp-web-install-button>
+    </div>
+  </div>
+
   <!-- T-Impulse LoRa (coming soon) -->
   <div class="board-card soon">
     <div class="board-img">
@@ -394,6 +415,15 @@
     })
     .catch(() => {
       document.getElementById('ver-guition4848').textContent = 'see GitHub';
+    });
+
+  fetch('firmware/nerdminer-cyd/manifest.json')
+    .then(r => r.json())
+    .then(m => {
+      document.getElementById('ver-nerdminer-cyd').textContent = m.version || 'unknown';
+    })
+    .catch(() => {
+      document.getElementById('ver-nerdminer-cyd').textContent = 'see GitHub';
     });
 </script>
 
