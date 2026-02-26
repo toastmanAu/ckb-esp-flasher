@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CKB ESP Flasher — Theme Builder</title>
+  <style>
+    :root {
+      --bg:      #0d0d0d;
+      --panel:   #161616;
+      --border:  #2a2a2a;
+      --accent:  #f0a500;
+      --accent2: #00c896;
+      --text:    #e8e8e8;
+      --dim:     #888;
+      --radius:  10px;
+      --font:    'Segoe UI', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    header .logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    header .logo span { color: var(--accent); }
+    header nav { margin-left: auto; display: flex; gap: 8px; }
+    header nav a {
+      color: var(--dim);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: background 0.15s, color 0.15s;
+    }
+    header nav a:hover, header nav a.active {
+      background: var(--border);
+      color: var(--text);
+    }
+    header nav a.active { color: var(--accent); }
+
+    .hero {
+      text-align: center;
+      padding: 40px 24px 24px;
+    }
+    .hero h1 { font-size: 30px; font-weight: 700; margin-bottom: 8px; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { color: var(--dim); font-size: 15px; max-width: 500px; margin: 0 auto; line-height: 1.6; }
+
+    /* ── MAIN LAYOUT ── */
+    .builder {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+    @media (max-width: 760px) {
+      .builder { grid-template-columns: 1fr; }
+    }
+
+    /* ── CONTROLS PANEL ── */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .section h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .field { margin-bottom: 12px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--dim);
+      margin-bottom: 4px;
+    }
+    .field label .val {
+      font-family: monospace;
+      color: var(--text);
+      font-size: 12px;
+    }
+    .field input[type=color] {
+      width: 100%;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: none;
+      cursor: pointer;
+      padding: 2px;
+    }
+    .field input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+    .field input[type=color]::-webkit-color-swatch { border: none; border-radius: 4px; }
+
+    /* Upload zone */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: #1a1400; }
+    .upload-zone p { color: var(--dim); font-size: 13px; margin-top: 8px; }
+    .upload-zone .icon { font-size: 32px; }
+    #bg-filename { margin-top: 8px; font-size: 12px; color: var(--accent2); }
+
+    /* Buttons */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 11px;
+      border-radius: 7px;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: var(--accent); color: #000; }
+    .btn-secondary {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    /* ── PREVIEW PANE ── */
+    .preview-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .preview-wrap h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+    }
+    .preview-outer {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    canvas#preview {
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      image-rendering: pixelated;
+      max-width: 100%;
+      width: 480px;
+      height: 480px;
+    }
+
+    .preview-note {
+      color: var(--dim);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .preview-note strong { color: var(--text); }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--dim);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span>CKB</span> ESP Flasher</div>
+  <nav>
+    <a href="index.html">Flash</a>
+    <a href="theme.html" class="active">Theme Builder</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>Theme <span>Builder</span></h1>
+  <p>Customise the colour scheme of your CKB Node Monitor. Download a <code>theme.h</code> file and drop it into your sketch to apply.</p>
+</div>
+
+<div class="builder">
+  <!-- CONTROLS -->
+  <div class="controls">
+
+    <!-- Background image -->
+    <div class="section">
+      <h3>Background Image</h3>
+      <div class="upload-zone" id="drop-zone">
+        <div class="icon">🖼️</div>
+        <p>Drop an image here or click to upload</p>
+        <p>JPEG · PNG · WebP (static) · Auto-resized to 480×480</p>
+        <div id="bg-filename"></div>
+      </div>
+      <input type="file" id="bg-input" accept=".jpg,.jpeg,.png,.webp" style="display:none">
+    </div>
+
+    <!-- Colours -->
+    <div class="section">
+      <h3>Colours</h3>
+
+      <div class="field">
+        <label>Header background <span class="val" id="val-accent">#F0A500</span></label>
+        <input type="color" id="col-accent" value="#F0A500">
+      </div>
+      <div class="field">
+        <label>Hero number <span class="val" id="val-hero">#F0A500</span></label>
+        <input type="color" id="col-hero" value="#F0A500">
+      </div>
+      <div class="field">
+        <label>Background <span class="val" id="val-bg">#0D1117</span></label>
+        <input type="color" id="col-bg" value="#0D1117">
+      </div>
+      <div class="field">
+        <label>Panel (since/epoch) <span class="val" id="val-panel">#161B22</span></label>
+        <input type="color" id="col-panel" value="#161B22">
+      </div>
+      <div class="field">
+        <label>Text <span class="val" id="val-text">#FFFFFF</span></label>
+        <input type="color" id="col-text" value="#FFFFFF">
+      </div>
+      <div class="field">
+        <label>Dim text <span class="val" id="val-dim">#888888</span></label>
+        <input type="color" id="col-dim" value="#888888">
+      </div>
+      <div class="field">
+        <label>OK indicator <span class="val" id="val-ok">#00C896</span></label>
+        <input type="color" id="col-ok" value="#00C896">
+      </div>
+      <div class="field">
+        <label>Warn indicator <span class="val" id="val-warn">#F0A500</span></label>
+        <input type="color" id="col-warn" value="#F0A500">
+      </div>
+      <div class="field">
+        <label>Error indicator <span class="val" id="val-err">#E05A00</span></label>
+        <input type="color" id="col-err" value="#E05A00">
+      </div>
+    </div>
+
+    <!-- Export -->
+    <div class="section">
+      <h3>Export</h3>
+      <button class="btn btn-primary" id="btn-download">⬇ Download theme.h</button>
+      <br>
+      <button class="btn btn-secondary" id="btn-reset" style="margin-top:8px">↺ Reset to defaults</button>
+    </div>
+
+    <!-- Instructions -->
+    <div class="section">
+      <h3>How to apply</h3>
+      <ol style="color:var(--dim);font-size:13px;line-height:1.8;padding-left:18px;">
+        <li>Download <code style="color:var(--accent2)">theme.h</code></li>
+        <li>Copy it into your sketch's <code>src/</code> folder</li>
+        <li>The sketch auto-includes it if present</li>
+        <li>Flash your board via the <a href="index.html" style="color:var(--accent)">Flash page</a></li>
+      </ol>
+    </div>
+
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-wrap">
+    <h3>Live Preview — 480×480</h3>
+    <div class="preview-outer">
+      <canvas id="preview" width="480" height="480"></canvas>
+    </div>
+    <p class="preview-note">
+      <strong>Note:</strong> Preview is approximate. Font rendering on-device uses 7-segment and JMH Typewriter bitmap fonts which differ from this canvas approximation.
+    </p>
+  </div>
+</div>
+
+<footer>
+  Built by <a href="https://github.com/toastmanAu" target="_blank">toastmanAu</a> ·
+  <a href="https://github.com/toastmanAu/kernel-workspace" target="_blank">Firmware on GitHub</a> ·
+  <a href="https://www.nervos.org/" target="_blank">Nervos CKB</a>
+</footer>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────
+const DEFAULTS = {
+  accent: '#F0A500',
+  hero:   '#F0A500',
+  bg:     '#0D1117',
+  panel:  '#161B22',
+  text:   '#FFFFFF',
+  dim:    '#888888',
+  ok:     '#00C896',
+  warn:   '#F0A500',
+  err:    '#E05A00',
+};
+let state = { ...DEFAULTS };
+let bgImage = null;  // ImageBitmap if uploaded
+
+// ── Colour inputs ──────────────────────────────────────────────────
+const KEYS = ['accent','hero','bg','panel','text','dim','ok','warn','err'];
+KEYS.forEach(k => {
+  const el = document.getElementById('col-' + k);
+  const val = document.getElementById('val-' + k);
+  el.addEventListener('input', () => {
+    state[k] = el.value.toUpperCase();
+    val.textContent = state[k];
+    renderPreview();
+  });
+});
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+  state = { ...DEFAULTS };
+  KEYS.forEach(k => {
+    document.getElementById('col-' + k).value = state[k];
+    document.getElementById('val-' + k).textContent = state[k];
+  });
+  bgImage = null;
+  document.getElementById('bg-filename').textContent = '';
+  renderPreview();
+});
+
+// ── Image upload ───────────────────────────────────────────────────
+const dropZone = document.getElementById('drop-zone');
+const bgInput  = document.getElementById('bg-input');
+
+dropZone.addEventListener('click', () => bgInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag');
+  const file = e.dataTransfer.files[0];
+  if (file) loadImage(file);
+});
+bgInput.addEventListener('change', () => {
+  if (bgInput.files[0]) loadImage(bgInput.files[0]);
+});
+
+function loadImage(file) {
+  // Validate type
+  const allowed = ['image/jpeg','image/png','image/webp'];
+  if (!allowed.includes(file.type)) {
+    alert('Please upload a JPEG, PNG, or static WebP image.');
+    return;
+  }
+  document.getElementById('bg-filename').textContent = '✓ ' + file.name;
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = async () => {
+    // Draw to offscreen 480×480 canvas to resize
+    const oc = new OffscreenCanvas(480, 480);
+    const ctx = oc.getContext('2d');
+    // Cover-fit: scale and centre
+    const scale = Math.max(480 / img.width, 480 / img.height);
+    const sw = img.width * scale, sh = img.height * scale;
+    ctx.drawImage(img, (480 - sw) / 2, (480 - sh) / 2, sw, sh);
+    bgImage = await createImageBitmap(oc);
+    URL.revokeObjectURL(url);
+    renderPreview();
+  };
+  img.src = url;
+}
+
+// ── Preview renderer ───────────────────────────────────────────────
+const canvas = document.getElementById('preview');
+const ctx = canvas.getContext('2d');
+
+function hex2rgb565(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+}
+
+function rgb565toHex(c) {
+  const r = ((c >> 11) & 0x1F) << 3;
+  const g = ((c >> 5)  & 0x3F) << 2;
+  const b =  (c & 0x1F) << 3;
+  return '#' + [r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+function renderPreview() {
+  const W = 480, H = 480;
+  const s = state;
+
+  // Background
+  if (bgImage) {
+    ctx.drawImage(bgImage, 0, 0);
+    ctx.fillStyle = 'rgba(0,0,0,0.45)';
+    ctx.fillRect(0, 0, W, H);
+  } else {
+    ctx.fillStyle = s.bg;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // ── Header ──
+  ctx.fillStyle = s.accent;
+  ctx.fillRect(0, 0, W, 52);
+  ctx.fillStyle = '#000';
+  ctx.font = 'bold 22px serif';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('CKB NODE', 14, 26);
+  // Status dot
+  ctx.fillStyle = '#000';
+  ctx.beginPath(); ctx.arc(W-28, 26, 11, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = s.ok;
+  ctx.beginPath(); ctx.arc(W-28, 26, 8, 0, Math.PI*2); ctx.fill();
+
+  // ── Block height label ──
+  ctx.fillStyle = s.dim;
+  ctx.font = '14px serif';
+  ctx.textBaseline = 'top';
+  const lbl = 'block height';
+  const lw = ctx.measureText(lbl).width;
+  ctx.fillText(lbl, (W - lw) / 2, 58);
+
+  // ── Hero number ──
+  ctx.fillStyle = s.hero;
+  ctx.font = 'bold 68px monospace';
+  ctx.textBaseline = 'top';
+  const num = '18710113';
+  const nw = ctx.measureText(num).width;
+  ctx.fillText(num, (W - nw) / 2, 78);
+
+  // ── Since bar ──
+  ctx.fillStyle = s.panel;
+  ctx.fillRect(0, 156, W, 44);
+  ctx.strokeStyle = s.dim + '44';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(0, 156, W, 44);
+  ctx.fillStyle = s.ok;
+  ctx.font = 'bold 16px monospace';
+  ctx.textBaseline = 'middle';
+  const since = 'Last block:  0s ago';
+  const sw2 = ctx.measureText(since).width;
+  ctx.fillText(since, (W - sw2) / 2, 156 + 22);
+
+  // ── Stats ──
+  ctx.fillStyle = s.text;
+  ctx.font = 'bold 14px serif';
+  ctx.textBaseline = 'top';
+  ctx.fillText('Peers', 20, 208);
+  ctx.fillText('Mempool', W/2+20, 208);
+  ctx.strokeStyle = s.dim + '44';
+  ctx.beginPath(); ctx.moveTo(W/2, 208); ctx.lineTo(W/2, 270); ctx.stroke();
+  ctx.fillStyle = s.ok;
+  ctx.font = 'bold 36px monospace';
+  ctx.fillText('21', 20, 228);
+  ctx.fillStyle = s.text;
+  ctx.fillText('3', W/2+20, 228);
+
+  // ── Epoch ──
+  ctx.fillStyle = s.panel;
+  ctx.fillRect(0, 272, W, 79);
+  ctx.strokeStyle = s.dim + '44';
+  ctx.strokeRect(0, 272, W, 79);
+  ctx.fillStyle = s.dim;
+  ctx.font = 'bold 14px serif';
+  ctx.textBaseline = 'top';
+  ctx.fillText('Epoch', 20, 285);
+  ctx.fillStyle = s.text;
+  ctx.font = 'bold 18px monospace';
+  ctx.fillText(' 2565', 72, 283);
+  ctx.fillStyle = s.text;
+  ctx.font = 'bold 18px monospace';
+  const pct = '24%';
+  const pw = ctx.measureText(pct).width;
+  ctx.fillText(pct, W - 20 - pw, 283);
+  // Progress bar
+  const bx=20, by=312, bw=W-40, bh=30;
+  ctx.fillStyle = s.dim + '44';
+  roundRect(ctx, bx, by, bw, bh, 6); ctx.fill();
+  ctx.fillStyle = s.accent;
+  roundRect(ctx, bx, by, Math.floor(bw*0.24), bh, 6); ctx.fill();
+
+  // ── Footer ──
+  ctx.strokeStyle = s.dim + '44';
+  ctx.beginPath(); ctx.moveTo(0, 359); ctx.lineTo(W, 359); ctx.stroke();
+  ctx.font = '13px serif';
+  ctx.textBaseline = 'top';
+  const lines = [
+    ['node:', '192.168.68.87'],
+    ['polls:', '27'],
+    ['ip:', '192.168.68.101'],
+    ['id:', '...GGD2PQGGU91HBWAZ'],
+  ];
+  lines.forEach(([label, val], i) => {
+    const y = 371 + i * 26;
+    ctx.fillStyle = s.dim;
+    ctx.fillText(label, 8, y);
+    const lw2 = ctx.measureText(label).width;
+    ctx.fillStyle = s.text;
+    ctx.font = '13px monospace';
+    ctx.fillText(' ' + val, 8 + lw2, y);
+    ctx.font = '13px serif';
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y);
+  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  ctx.lineTo(x+w, y+h-r);
+  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  ctx.lineTo(x+r, y+h);
+  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+  ctx.lineTo(x, y+r);
+  ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.closePath();
+}
+
+// ── Export theme.h ─────────────────────────────────────────────────
+document.getElementById('btn-download').addEventListener('click', () => {
+  const s = state;
+
+  function toRGB565(hex) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+  }
+
+  let out = `/**
+ * theme.h — CKB Node Monitor custom theme
+ * Generated by CKB ESP Flasher Theme Builder
+ * https://toastmanau.github.io/ckb-esp-flasher/theme.html
+ *
+ * Drop this file into src/ alongside main.cpp
+ */
+
+#pragma once
+
+/* RGB565 colour values */
+#define COL_ACCENT   0x${toRGB565(s.accent).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.accent} */
+#define COL_HERO     0x${toRGB565(s.hero).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.hero} */
+#define COL_BG       0x${toRGB565(s.bg).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.bg} */
+#define COL_PANEL    0x${toRGB565(s.panel).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.panel} */
+#define COL_TEXT     0x${toRGB565(s.text).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.text} */
+#define COL_DIM      0x${toRGB565(s.dim).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.dim} */
+#define COL_OK       0x${toRGB565(s.ok).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.ok} */
+#define COL_WARN     0x${toRGB565(s.warn).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.warn} */
+#define COL_ERR      0x${toRGB565(s.err).toString(16).toUpperCase().padStart(4,'0')}  /* ${s.err} */
+#define COL_DIVIDER  0x2965  /* fixed subtle divider */
+`;
+
+  // If background image uploaded, encode as RGB565 PROGMEM array
+  if (bgImage) {
+    const oc = new OffscreenCanvas(480, 480);
+    const octx = oc.getContext('2d');
+    octx.drawImage(bgImage, 0, 0);
+    const imageData = octx.getImageData(0, 0, 480, 480);
+    const pixels = imageData.data;
+    let arr = '\n/* Background image — 480×480 RGB565 */\n';
+    arr += 'const uint16_t THEME_BG_IMAGE[480*480] PROGMEM = {\n  ';
+    const vals = [];
+    for (let i = 0; i < pixels.length; i += 4) {
+      const r = pixels[i], g = pixels[i+1], b = pixels[i+2];
+      const c = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+      vals.push('0x' + c.toString(16).toUpperCase().padStart(4,'0'));
+    }
+    // Chunk into rows of 16
+    for (let i = 0; i < vals.length; i += 16) {
+      arr += vals.slice(i, i+16).join(', ');
+      if (i + 16 < vals.length) arr += ',\n  ';
+    }
+    arr += '\n};\n#define THEME_HAS_BG_IMAGE 1\n';
+    out += arr;
+  } else {
+    out += '\n#define THEME_HAS_BG_IMAGE 0\n';
+  }
+
+  const blob = new Blob([out], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'theme.h';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+// Initial render
+renderPreview();
+</script>
+
+</body>
+</html>
