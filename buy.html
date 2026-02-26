@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Where to Buy — CKB ESP Flasher</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+      border-bottom: 1px solid #30363d;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header .logo { font-size: 1.5rem; }
+    header h1 { font-size: 1.2rem; font-weight: 600; color: #e6edf3; }
+    header p { font-size: 0.85rem; color: #8b949e; margin-top: 0.15rem; }
+    nav a {
+      color: #58a6ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-left: auto;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+    }
+    .hero h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      color: #8b949e;
+      max-width: 540px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 4rem;
+    }
+
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: #58a6ff; }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .card-icon {
+      font-size: 2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .card-title { font-size: 1.05rem; font-weight: 600; }
+    .card-sub { font-size: 0.8rem; color: #8b949e; margin-top: 0.2rem; font-family: monospace; }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: #8b949e;
+      line-height: 1.5;
+    }
+
+    .specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .spec-tag {
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.75rem;
+      color: #8b949e;
+    }
+
+    .price-hint {
+      font-size: 0.8rem;
+      color: #3fb950;
+      font-weight: 500;
+    }
+
+    .buy-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+
+    .buy-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 0.9rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: opacity 0.15s;
+      gap: 0.5rem;
+    }
+    .buy-btn:hover { opacity: 0.85; }
+    .buy-btn .store { display: flex; align-items: center; gap: 0.4rem; }
+    .buy-btn .arrow { font-size: 0.75rem; opacity: 0.7; }
+
+    .btn-ali   { background: #e8192c; color: #fff; }
+    .btn-bang  { background: #d0021b; color: #fff; }
+    .btn-amz   { background: #ff9900; color: #111; }
+    .btn-ebay  { background: #0064d2; color: #fff; }
+    .btn-search { background: #21262d; border: 1px solid #30363d; color: #e6edf3; }
+
+    .note {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-left: 3px solid #58a6ff;
+      border-radius: 6px;
+      padding: 0.9rem 1.2rem;
+      max-width: 1100px;
+      margin: 0 auto 1rem;
+      font-size: 0.85rem;
+      color: #8b949e;
+      line-height: 1.5;
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
+    }
+    .note strong { color: #e6edf3; }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #484f58;
+      font-size: 0.8rem;
+      border-top: 1px solid #21262d;
+    }
+    footer a { color: #58a6ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="logo">⚡</span>
+  <div>
+    <h1>CKB ESP Flasher — Where to Buy</h1>
+    <p>Hardware boards supported by the CKB firmware ecosystem</p>
+  </div>
+  <nav><a href="index.html">← Back to Flasher</a></nav>
+</header>
+
+<div class="hero">
+  <h2>Get the Hardware</h2>
+  <p>All boards are available from multiple suppliers. AliExpress typically has the lowest prices. Check multiple stores for stock and shipping to your region.</p>
+</div>
+
+<div class="note">
+  <strong>💡 Tip:</strong> Prices vary significantly by seller and shipping option. AliExpress listings often include free (slow) shipping. Search by the exact model number for best results — avoid clones that omit the PSRAM.
+</div>
+
+<div class="grid">
+
+  <!-- Guition ESP32-S3 4848S040 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">🖥️</div>
+      <div>
+        <div class="card-title">Guition ESP32-S3-4848S040</div>
+        <div class="card-sub">ESP32-S3-4848S040C / 86-Box</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      480×480 RGB parallel display in a wall-switch form factor. 8MB PSRAM, 16MB Flash. The flagship CKB dashboard board.
+    </div>
+    <div class="specs">
+      <span class="spec-tag">ESP32-S3</span>
+      <span class="spec-tag">480×480 ST7701S</span>
+      <span class="spec-tag">8MB PSRAM</span>
+      <span class="spec-tag">WiFi</span>
+    </div>
+    <div class="price-hint">~$18–25 USD</div>
+    <div class="buy-links">
+      <a class="buy-btn btn-ali" href="https://www.aliexpress.com/w/wholesale-ESP32-S3-4848S040.html" target="_blank">
+        <span class="store">🛒 AliExpress</span><span class="arrow">↗</span>
+      </a>
+      <a class="buy-btn btn-search" href="https://www.google.com/search?q=ESP32-S3-4848S040+buy&tbm=shop" target="_blank">
+        <span class="store">🔍 Google Shopping</span><span class="arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- JC3248W535EN -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">📺</div>
+      <div>
+        <div class="card-title">JCZN JC3248W535EN</div>
+        <div class="card-sub">3248W535EN / ESP32-S3 QSPI AMOLED</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      480×320 QSPI AMOLED display on ESP32-S3. AXS15231B driver chip. Compact round-corner design, great colour depth.
+    </div>
+    <div class="specs">
+      <span class="spec-tag">ESP32-S3</span>
+      <span class="spec-tag">480×320 AMOLED</span>
+      <span class="spec-tag">QSPI</span>
+      <span class="spec-tag">AXS15231B</span>
+    </div>
+    <div class="price-hint">~$15–22 USD</div>
+    <div class="buy-links">
+      <a class="buy-btn btn-ali" href="https://www.aliexpress.com/w/wholesale-JC3248W535EN.html" target="_blank">
+        <span class="store">🛒 AliExpress</span><span class="arrow">↗</span>
+      </a>
+      <a class="buy-btn btn-search" href="https://www.google.com/search?q=JC3248W535EN+buy&tbm=shop" target="_blank">
+        <span class="store">🔍 Google Shopping</span><span class="arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- CYD ESP32-2432S028R -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">💛</div>
+      <div>
+        <div class="card-title">CYD — Cheap Yellow Display</div>
+        <div class="card-sub">ESP32-2432S028R</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      The famous "Cheap Yellow Display" — 320×240 ILI9341 TFT with resistive touch, onboard LED and LDR. Runs NerdMiner CKB.
+    </div>
+    <div class="specs">
+      <span class="spec-tag">ESP32</span>
+      <span class="spec-tag">320×240 ILI9341</span>
+      <span class="spec-tag">Touch</span>
+      <span class="spec-tag">USB-C</span>
+    </div>
+    <div class="price-hint">~$7–12 USD</div>
+    <div class="buy-links">
+      <a class="buy-btn btn-ali" href="https://www.aliexpress.com/w/wholesale-ESP32-2432S028.html" target="_blank">
+        <span class="store">🛒 AliExpress</span><span class="arrow">↗</span>
+      </a>
+      <a class="buy-btn btn-amz" href="https://www.amazon.com/s?k=ESP32+Cheap+Yellow+Display+2432S028" target="_blank">
+        <span class="store">📦 Amazon</span><span class="arrow">↗</span>
+      </a>
+      <a class="buy-btn btn-search" href="https://www.google.com/search?q=ESP32-2432S028R+buy&tbm=shop" target="_blank">
+        <span class="store">🔍 Google Shopping</span><span class="arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- T-Impulse -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">📡</div>
+      <div>
+        <div class="card-title">LILYGO T-Impulse</div>
+        <div class="card-sub">T-Impulse / TTGO T-Impulse</div>
+      </div>
+    </div>
+    <div class="card-desc">
+      ESP32-S3 + SSD1306 OLED + SX1262 LoRa. Compact dev board ideal for the CKB LoRa client. Built-in battery connector.
+    </div>
+    <div class="specs">
+      <span class="spec-tag">ESP32-S3</span>
+      <span class="spec-tag">SSD1306 OLED</span>
+      <span class="spec-tag">LoRa SX1262</span>
+      <span class="spec-tag">Battery</span>
+    </div>
+    <div class="price-hint">~$20–30 USD</div>
+    <div class="buy-links">
+      <a class="buy-btn btn-ali" href="https://www.aliexpress.com/w/wholesale-lilygo-t-impulse.html" target="_blank">
+        <span class="store">🛒 AliExpress</span><span class="arrow">↗</span>
+      </a>
+      <a class="buy-btn btn-search" href="https://www.google.com/search?q=LILYGO+T-Impulse+LoRa+buy&tbm=shop" target="_blank">
+        <span class="store">🔍 Google Shopping</span><span class="arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>CKB ESP Flasher · Open source firmware for Nervos CKB · <a href="https://github.com/toastmanAu/ckb-esp-flasher" target="_blank">GitHub</a> · Prices approximate, check listings for current availability</p>
+</footer>
+
+</body>
+</html>
