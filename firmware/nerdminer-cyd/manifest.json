@@ -1,6 +1,6 @@
 {
   "name": "NerdMiner CKB — ESP32 CYD (2432S028R)",
-  "version": "89cdd43",
+  "version": "a630d74",
   "home_assistant_domain": "esphome",
   "funding_url": "https://github.com/toastmanAu",
   "new_install_prompt_erase": true,
